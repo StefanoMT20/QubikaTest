@@ -4,49 +4,46 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import qubika.api.CreateUserAPI;
 import qubika.actions.LoginActions;
 import qubika.actions.CategoryActions;
 import qubika.validations.CategoryValidations;
+import qubika.validations.CreateUserValidations;
+import io.restassured.response.Response;
 
 import java.time.Duration;
-import java.util.UUID;
 
-public class CategoryTest {
+public class EndToEndTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
 
     @BeforeClass
-    public void setup() {
-        CreateUserAPI.createUser();
-        WebDriverManager.chromedriver().setup();
+    public void setUp() {
         driver = new ChromeDriver();
-        driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.manage().window().maximize();
     }
 
-    @Test
-    public void createCategoryAndSubcategoryTest() throws InterruptedException {
-        LoginActions.login(driver,wait);
-        Thread.sleep(2000);
+    @Test(groups = "end-to-end")
+    public void completeFlowTest() {
+        Response response = CreateUserAPI.createUser();
+        CreateUserValidations.validateUserCreatedSuccessfully(response);
 
-        CategoryActions.goToCategoryPage(driver, wait);
+        LoginActions.login(driver, wait);
 
-        String categoryName = "Cat_Piero_Meza" + UUID.randomUUID();
+        String categoryName = "Piero_Meza_Test_Category" + System.currentTimeMillis();
+        CategoryActions.goToCategoryPage(driver, wait);;
         CategoryActions.createCategory(driver, wait, categoryName);
         CategoryValidations.validateCategoryCreated(driver, wait, categoryName);
 
-        String subcategoryName = "Sub_Piero_Meza" + UUID.randomUUID();
+        String subcategoryName = "Piero_Meza_Test_Sub_Category" + System.currentTimeMillis();
         CategoryActions.createSubcategory(driver, wait, subcategoryName);
         CategoryValidations.validateSubcategoryCreated(driver, wait, subcategoryName);
     }
 
     @AfterClass
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        if (driver != null) driver.quit();
     }
 }
