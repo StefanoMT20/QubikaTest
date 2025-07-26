@@ -18,7 +18,7 @@ public class EndToEndTest {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -42,7 +42,7 @@ public class EndToEndTest {
         CategoryValidations.validateSubcategoryCreated(driver, wait, subcategoryName);
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         if (driver != null) driver.quit();
     }
