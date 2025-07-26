@@ -23,11 +23,16 @@ public class CreateUserAPI {
                 List.of("ROLE_ADMIN")
         );
 
-        return given()
+        Response response = given()
                 .baseUri(BASE_API_URL)
                 .header("Content-Type", "application/json")
                 .body(request)
                 .post("/api/auth/register");
+
+        UserData.email = request.getEmail();
+        UserData.password = request.getPassword();
+
+        return response;
     }
 }
 
