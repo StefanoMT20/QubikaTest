@@ -7,8 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CategoryActions {
 
-    private static final String CATEGORY_URL = "https://club-administration.qa.qubika.com/#/category-type";
-
+    private static final By categoryLink = By.cssSelector("a.nav-link[href*='#/category-type']");
     private static final By newCategoryButton = By.xpath("//button[contains(text(),'Adicionar')]");
     private static final By saveButton = By.xpath("//button[contains(text(),'Aceptar')]");
     private static final By categoryNameInput = By.id("input-username");
@@ -17,7 +16,7 @@ public class CategoryActions {
     private static final By subcategoryFirstOption = By.cssSelector(".ng-option");
 
     public static void goToCategoryPage(WebDriver driver, WebDriverWait wait) {
-        driver.get(CATEGORY_URL);
+        wait.until(ExpectedConditions.elementToBeClickable(categoryLink)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(newCategoryButton));
         System.out.println("[INFO] Página de categorías cargada correctamente.");
     }

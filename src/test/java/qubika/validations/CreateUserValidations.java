@@ -14,7 +14,7 @@ public class CreateUserValidations {
         assert actualEmail.equals(UserData.email) : "Expected email: " + UserData.email + ", but got: " + actualEmail;
         assert roles.contains("ROLE_ADMIN") : "Expected ROLE_ADMIN in roles, but got: " + roles;
 
-        System.out.println("✅ Usuario creado correctamente:");
+        System.out.println("Usuario creado correctamente:");
         System.out.println("Email: " + actualEmail);
         System.out.println("Roles: " + roles);
         System.out.println("Status: " + statusCode);
