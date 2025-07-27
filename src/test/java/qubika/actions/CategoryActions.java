@@ -1,19 +1,12 @@
 package qubika.actions;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CategoryActions {
+import static qubika.ui.pages.CategoryPage.*;
 
-    private static final By categoryLink = By.cssSelector("a.nav-link[href*='#/category-type']");
-    private static final By newCategoryButton = By.xpath("//button[contains(text(),'Adicionar')]");
-    private static final By saveButton = By.xpath("//button[contains(text(),'Aceptar')]");
-    private static final By categoryNameInput = By.id("input-username");
-    private static final By subcategoryCheckbox = By.cssSelector(".custom-control-label");
-    private static final By subcategorySelectInput = By.cssSelector("ng-select input[type='text']");
-    private static final By subcategoryFirstOption = By.cssSelector(".ng-option");
+public class CategoryActions {
 
     public static void goToCategoryPage(WebDriver driver, WebDriverWait wait) {
         wait.until(ExpectedConditions.elementToBeClickable(categoryLink)).click();
