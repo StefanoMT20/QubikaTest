@@ -1,15 +1,14 @@
 package qubika.ui;
 
+import io.restassured.response.Response;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import qubika.api.CreateUserAPI;
-import qubika.actions.LoginActions;
-import qubika.actions.CategoryActions;
-import qubika.validations.CategoryValidations;
+import qubika.flows.LoginFlow;
+import qubika.flows.CategoryFlow;
 import qubika.validations.CreateUserValidations;
-import io.restassured.response.Response;
 
 import java.time.Duration;
 
@@ -30,16 +29,8 @@ public class EndToEndTest {
         Response response = CreateUserAPI.createUser();
         CreateUserValidations.validateUserCreatedSuccessfully(response);
 
-        LoginActions.login(driver, wait);
-
-        String categoryName = "Piero_Meza_Test_Category" + System.currentTimeMillis();
-        CategoryActions.goToCategoryPage(driver, wait);;
-        CategoryActions.createCategory(driver, wait, categoryName);
-        CategoryValidations.validateCategoryCreated(driver, wait, categoryName);
-
-        String subcategoryName = "Piero_Meza_Test_Sub_Category" + System.currentTimeMillis();
-        CategoryActions.createSubcategory(driver, wait, subcategoryName);
-        CategoryValidations.validateSubcategoryCreated(driver, wait, subcategoryName);
+        LoginFlow.execute(driver, wait);
+        CategoryFlow.createCategoryWithSubcategory(driver, wait);
     }
 
     @AfterClass(alwaysRun = true)

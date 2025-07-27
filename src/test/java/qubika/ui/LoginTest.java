@@ -7,9 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import qubika.api.CreateUserAPI;
-import qubika.actions.LoginActions;
+import qubika.flows.LoginFlow;
 import qubika.validations.CreateUserValidations;
-import qubika.validations.LoginValidations;
 
 import java.time.Duration;
 
@@ -29,11 +28,9 @@ public class LoginTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-
     @Test
     public void loginWithNewUser() {
-        LoginActions.login(driver, wait);
-        LoginValidations.validateLoginSuccess(driver, wait);
+        LoginFlow.execute(driver, wait);
     }
 
     @AfterClass

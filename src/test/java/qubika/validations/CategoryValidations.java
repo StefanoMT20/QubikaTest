@@ -6,13 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-
+import static qubika.ui.pages.CategoryPage.*;
 import java.util.List;
 
 public class CategoryValidations {
-
-    private static final By paginationButtons = By.cssSelector("li.page-item");
-    private static final By tableRows = By.cssSelector("tbody tr");
 
     private static void goToLastPageFromPagination(WebDriver driver, WebDriverWait wait) {
         wait.until(driver1 -> driver1.findElements(paginationButtons).stream()
