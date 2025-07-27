@@ -2,19 +2,31 @@
 
 This repository contains a complete end-to-end automated test suite for the Qubika Sports Club Management System.
 The tests validate a real user flow combining API-level and UI-level validations, using **RestAssured**, **Selenium WebDriver**, and **TestNG**.
-
 ---
 
+## Architecture: Screenplay-Style Design
+This project follows a modular structure inspired by the **Screenplay Pattern**, focusing on clear separation of concerns:
+
+| Layer               | Folder               | Responsibility                                  |
+|--------------------|----------------------|-------------------------------------------------|
+| Actions (`Tasks`)  | `qubika.actions`     | Interact with the UI                            |
+| Validations        | `qubika.validations` | Assertions and post-conditions                  |
+| Flows (`Use Cases`)| `qubika.flows`       | Encapsulate reusable, complete user flows       |
+| API Calls          | `qubika.api`         | Backend interaction via RestAssured             |
+| Page Locators      | `qubika.ui.pages`    | Define UI elements used in actions              |
+| Tests              | `qubika.ui`          | Define actual TestNG scenarios                  |
+
 ## Project Structure
-The codebase follows a **screenplay-style architecture**, separating concerns into actions, validations, API operations, and test definitions:
 ```plaintext
 src/
 └── test/
     └── java/
-        ├── qubika.actions/       # UI interactions (e.g. login, navigation, creation)
-        ├── qubika.api/           # API calls (e.g. create user with RestAssured)
-        ├── qubika.validations/   # UI and API validations/assertions
-        └── qubika.ui/            # TestNG test classes
+        ├── qubika.actions/       # UI interactions (login, category creation, etc.)
+        ├── qubika.api/           # API calls (user creation via RestAssured)
+        ├── qubika.flows/         # Full user workflows (login, category flow)
+        ├── qubika.validations/   # Assertions for UI and API
+        ├── qubika.ui.pages/      # Centralized UI element selectors (PageObjects)
+        └── qubika.ui/            # Test classes (LoginTest, CategoryTest, EndToEndTest)
 ```
 ### Key Benefits of this structure:
 - **Scalability**: Easy to extend with new modules.
